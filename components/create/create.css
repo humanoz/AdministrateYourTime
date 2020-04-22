@@ -1,0 +1,10 @@
+.ant-form-item{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 40px;  
+}
+
+.ant-form-item-label{
+    text-align: left;
+    margin: 0;
+}
