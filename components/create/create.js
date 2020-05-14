@@ -40,9 +40,7 @@ const CreateTask = () => {
     }
 
     const handleClick = (e) => {
-        e.preventDefault(); 
-console.log(       document.getElementById('title').value);
-console.log(        document.getElementById('description').value)
+        e.preventDefault();
 
         setVisible(true);
     }

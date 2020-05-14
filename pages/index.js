@@ -7,29 +7,29 @@ import Task from '../components/task/task';
 
 import { useState } from 'react';
 
-export default function Home( {data} ) {
-  const [ searchParams, setSearchParams ] = useState(" ");
+export default function Home () {
+  const [searchParams, setSearchParams] = useState(" ");
 
   const handleChange = (e) => {
-      setSearchParams(e.target.value);
-      console.log(data);
-  } 
+    setSearchParams(e.target.value) 
+    console.log(data);
+  }
 
   return (
     <div className="container">
-        <Head>
-            <title>Create Next App</title>
-            <link rel="icon" href="/favicon.ico" />
+      <Head>
+        <title>Create Next App</title>
+        <link rel="icon" href="/favicon.ico" />
       </Head>
-        <main>
-            <Search handleChange={handleChange}/>
-            
-            <Create/>
+      <main>
+        <Search handleChange={handleChange} />
 
-            <Task/>
-        </main>
+        <Create />
 
-        <style jsx>{`
+        <Task />
+      </main>
+
+      <style jsx>{`
           .container{
                 width: 40%;
                 height: 100%;
@@ -42,8 +42,3 @@ export default function Home( {data} ) {
   )
 }
 
-Home.getInitialProps = () => {
-    const data = localStorage.getItem('tasklist');
-
-    return data;
-}
