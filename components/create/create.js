@@ -6,7 +6,6 @@ import './create.css';
 
 const CreateTask = () => {
 
-    let dataId = 0;
     const [ visible, setVisible ] = useState(false);
     const [ title, setTitle ] = useState("");
     const [ description, setDescription ] = useState("");
@@ -15,22 +14,18 @@ const CreateTask = () => {
     const handleChange = (e, str) => {  
         
         if(!e._isAMomentObject){
-            let value = '';
-            try{
-                if(e.target.value){
-                    value = e.target.value;
-                 }
-            }catch{
-
-            }
-            switch(e.target.name){
-                case 'title':
-                    setTitle(value);
-                    break;
-                case 'description':
-                    setDescription(value);
-                    break;
-             }
+          let value = '';
+          if(e.target.value){
+            value = e.target.value;
+          }
+          switch(e.target.name){
+            case 'title':
+              setTitle(value);
+              break;
+            case 'description':
+              setDescription(value);
+              break;
+           }
         }
     
         if(str){
@@ -41,7 +36,6 @@ const CreateTask = () => {
 
     const handleClick = (e) => {
         e.preventDefault();
-
         setVisible(true);
     }
 
@@ -50,29 +44,30 @@ const CreateTask = () => {
     }
 
     const handleOk = () => {
-          if(true){
-            if(localStorage.getItem("tasklist") === null){
-                const taskInfo = [{title: title, description: description, date: date}];
-                const list = {'task': taskInfo};
-                localStorage.setItem('tasklist', JSON.stringify(list));
-            }
-            else{
-                const taskInfo = {title: title, description: description, date: date};
-                const tasks = JSON.parse(localStorage.getItem('tasklist'));
-                tasks.task.push(taskInfo);
+      const taskInfo = {
+        nombre: title, 
+        fecha_entrega: date, 
+        descripcion: description
+      };
 
-                localStorage.setItem('tasklist', JSON.stringify(tasks));
-            }
-        }
+      const URL = 'http://localhost:1337/tareas';
+      fetch(URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(taskInfo)
+      })
 
-        setVisible(false);
+      setVisible(false);
+
     }
 
     return(
         <div>
             <Button onClick={handleClick} type='primary' size='large' style={{width: '120px', margin: '15px 0'}}>Add</Button>
 
-            <Modal onOk={handleOk} onCancel={handleCancel} title='Add new task' visible={visible} width='320px' footer={null}>
+            <Modal onCancel={handleCancel} title='Add new task' visible={visible} width='320px' footer={null}>
                 <Form onFinish={handleOk}>
                     <Form.Item label='Title'>
                         <Input id='title' name='title' allowClear onChange={handleChange}/>
